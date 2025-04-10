@@ -1,0 +1,37 @@
+remotecfg {
+	url            = "{GCLOUD_FM_URL}"
+	id             = "{GCLOUD_FM_COLLECTOR_ID}"
+	poll_frequency = "{GCLOUD_FM_POLL_FREQUENCY}"
+
+	basic_auth {
+		username = "{GCLOUD_FM_HOSTED_ID}"
+		password = "{GCLOUD_RW_API_KEY}"
+	}
+
+	attributes = {{REMOTE_ATTRIBUTES}}
+	{USE_PROXY}
+}
+
+prometheus.remote_write "metrics_service" {
+	endpoint {
+		url = "{GCLOUD_HOSTED_METRICS_URL}"
+
+		basic_auth {
+			username = "{GCLOUD_HOSTED_METRICS_ID}"
+			password = "{GCLOUD_RW_API_KEY}"
+		}
+		{USE_PROXY}
+	}
+}
+
+loki.write "grafana_cloud_loki" {
+	endpoint {
+		url = "{GCLOUD_HOSTED_LOGS_URL}"
+
+		basic_auth {
+			username = "{GCLOUD_HOSTED_LOGS_ID}"
+			password = "{GCLOUD_RW_API_KEY}"
+		}
+		{USE_PROXY}
+	}
+}
