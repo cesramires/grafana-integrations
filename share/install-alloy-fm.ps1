@@ -150,12 +150,13 @@ try {
 	$content = $content.Replace("{GCLOUD_HOSTED_LOGS_ID}", $GCLOUD_HOSTED_LOGS_ID)
 	$content = $content.Replace("{GCLOUD_HOSTED_LOGS_ID}", $GCLOUD_HOSTED_LOGS_ID)
 	$content = $content.Replace("{USE_PROXY}", $PROXY_URL)
-	$content = $content.Replace("{{REMOTE_ATTRIBUTES}}", $ATTR)
+	$content = $content.Replace("{REMOTE_ATTRIBUTES}", $ATTR)
 	$content | Set-Content $CONFIG_FILE
 
 	Write-Host "Creating Alloy Fleet Management system environment variables"
 	[Environment]::SetEnvironmentVariable("GCLOUD_FM_COLLECTOR_ID", $hostname, "Machine")
 	[Environment]::SetEnvironmentVariable("GCLOUD_RW_API_KEY", $GCLOUD_RW_API_KEY, "Machine")
+	[Environment]::SetEnvironmentVariable("ALLOY_TAGS", $ATTR, "Machine")
 
 	$DEST_DIR = "C:\Program Files\GrafanaLabs\Alloy"
 	Write-Host "--- Moving finalized Alloy config to $DEST_DIR\config.alloy"
