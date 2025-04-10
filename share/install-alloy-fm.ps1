@@ -9,6 +9,7 @@ param (
 	$GCLOUD_FM_POLL_FREQUENCY,
 	$GCLOUD_FM_HOSTED_ID,
 	$GCLOUD_RW_API_KEY,
+ 	$REMOTE_CONFIG,
 	$ATTR,
 	$PROXY
 )
@@ -121,7 +122,11 @@ try {
 
 	Write-Host "--- Retrieving Alloy Fleet Management config"
 	
-	$CONFIG_URI = "https://storage.googleapis.com/cloud-onboarding/alloy/config/config-fm.alloy"
+	if ($REMOTE_CONFIG -eq $null -or $REMOTE_CONFIG -eq ""){ 
+	    $CONFIG_URI = "https://storage.googleapis.com/cloud-onboarding/alloy/config/config-fm.alloy"
+    	} else { 
+            $CONFIG_URI = $REMOTE_CONFIG
+    	}
 
 	if ($NEED_PROXY -eq "false") {
 		Invoke-WebRequest -Uri $CONFIG_URI -Outfile $CONFIG_FILE -ErrorAction Stop
@@ -151,7 +156,6 @@ try {
 	Write-Host "Creating Alloy Fleet Management system environment variables"
 	[Environment]::SetEnvironmentVariable("GCLOUD_FM_COLLECTOR_ID", $hostname, "Machine")
 	[Environment]::SetEnvironmentVariable("GCLOUD_RW_API_KEY", $GCLOUD_RW_API_KEY, "Machine")
-	[Environment]::SetEnvironmentVariable("VIAFLOW_CLIENT", $CLIENT, "Machine")
 
 	$DEST_DIR = "C:\Program Files\GrafanaLabs\Alloy"
 	Write-Host "--- Moving finalized Alloy config to $DEST_DIR\config.alloy"
