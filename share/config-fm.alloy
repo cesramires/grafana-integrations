@@ -8,7 +8,7 @@ remotecfg {
 		password = "{GCLOUD_RW_API_KEY}"
 	}
 
-	attributes = {{REMOTE_ATTRIBUTES}}
+	attributes = {"viaflow_client"="{REMOTE_ATTRIBUTES}"}
 	{USE_PROXY}
 }
 
