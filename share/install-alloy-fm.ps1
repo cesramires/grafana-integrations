@@ -93,7 +93,7 @@ try {
 	if ($NEED_PROXY -eq "false") {
 		Invoke-WebRequest -Uri $DOWNLOAD_URL -OutFile $OUTPUT_ZIP_FILE -ErrorAction Stop
 	} else {
-		$PROXY_URL = "http_proxy = `"$PROXY`""
+		$PROXY_URL = "proxy_from_environment = true"
 		Invoke-WebRequest -Uri $DOWNLOAD_URL -OutFile $OUTPUT_ZIP_FILE -ErrorAction Stop -Proxy $PROXY
 	}
 	
@@ -156,6 +156,7 @@ try {
 	Write-Host "Creating Alloy Fleet Management system environment variables"
 	[Environment]::SetEnvironmentVariable("GCLOUD_FM_COLLECTOR_ID", $hostname, "Machine")
 	[Environment]::SetEnvironmentVariable("GCLOUD_RW_API_KEY", $GCLOUD_RW_API_KEY, "Machine")
+	[Environment]::SetEnvironmentVariable("HTTPS_PROXY", $PROXY, "Machine")
 	[Environment]::SetEnvironmentVariable("ALLOY_TAGS", $ATTR, "Machine")
 
 	$DEST_DIR = "C:\Program Files\GrafanaLabs\Alloy"
