@@ -93,7 +93,7 @@ try {
 	if ($NEED_PROXY -eq "false") {
 		Invoke-WebRequest -Uri $DOWNLOAD_URL -OutFile $OUTPUT_ZIP_FILE -ErrorAction Stop
 	} else {
-		$PROXY_URL = "http_proxy = \"$PROXY\""
+		$PROXY_URL = "http_proxy = `"$PROXY`""
 		Invoke-WebRequest -Uri $DOWNLOAD_URL -OutFile $OUTPUT_ZIP_FILE -ErrorAction Stop -Proxy $PROXY
 	}
 	
